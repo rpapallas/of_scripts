@@ -1,0 +1,33 @@
+/*{
+    "author": "Rafael Papallas",
+    "targets": ["omnifocus"],
+    "type": "action",
+    "identifier": "rpapallas.com.keyprojects",
+    "version": "0.1",
+    "description": "Add or remove a key project",
+    "label": "Key Project",
+    "mediumLabel": "Update key project status",
+    "paletteLabel": "Key Project",
+    "image": "key"
+}*/
+(() => {
+    var action = new PlugIn.Action(function(selection, sender) {
+        const keyEmoji = "🔑";
+
+		selection.projects.forEach(function(project) {
+            var title = project.name;
+            if (project.name.includes(keyEmoji)) {
+                title = title.replace(keyEmoji, "").trim();
+            } else {
+                title = `${title} ${keyEmoji}`.trim();
+            }
+            project.name = title;
+        });
+    });
+
+    action.validate = function(selection) {
+        return (selection.projects.length >= 1)
+    };
+
+    return action;
+})();
